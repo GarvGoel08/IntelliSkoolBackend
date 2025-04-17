@@ -6,7 +6,7 @@ import connectDB from "./config/conn.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { Server } from "socket.io";
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -32,19 +32,18 @@ import classRouter from "./routes/classRoutes.js";
 import classRoomRouter from "./routes/classRoomRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 import registrationRouter from "./routes/registrationRoutes.js";
-import path from 'path';
-import YAML from 'yamljs';
-import swaggerUi from 'swagger-ui-express';
+import path from "path";
+import YAML from "yamljs";
+import swaggerUi from "swagger-ui-express";
 
-const swaggerDocument = YAML.load(path.join(__dirname, 'docs', 'swagger.yaml'));
+const swaggerDocument = YAML.load(path.join(__dirname, "docs", "swagger.yaml"));
 
 app.use("/api/classes", classRouter);
 app.use("/api/classrooms", classRoomRouter);
 app.use("/api/user", userRouter);
 app.use("/api/register", registrationRouter);
 
-
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.get("/", (req, res) => {
   res.send("IntelliSkool API is Running");
 });
@@ -85,13 +84,29 @@ const io = new Server(server, {
 // import Submission from "./models/submissions.js";
 // import Prompt from "./models/gptModel.js";
 
-// io.on("connection", (socket) => {
-//   socket.on("connect-room", async ({ roomID }) => {
-//     socket.join(roomID);
-//     let outOfTabTimestamp;
+import Class from "./models/Class.js";
+import User from "./models/Users.js";
+
+io.on("connection", (socket) => {
+  socket.on("connect-room", async ({ roomID, userID }) => {
+    socket.join(roomID);
+    socket.on("ping", async () => {
+      User.findByIdAndUpdate(userID, { $inc: { attendanceMinutes: 1 } });
+    });
+    socket.on("Quiz", async ({ question, options, timeAlloted }) => {
+      socket.emit("Quiz", { question, options, timeAlloted });
+    });
+    socket.on("Answer", async ({ answer, time_taken }) => {
+      // submission.answers.push({ answer, time_taken });
+      // await submission.save();
+    });
+  });
+});
 //     let lookAwayTimestamp = 0;
 //     socket.on("look-away", () => {
 //       socket.broadcast.to(roomID).emit("look-away");
+//       lookAwayTimestamp += 1;
+//     });
 //       lookAwayTimestamp += 1;
 //     });
 //     socket.on("look-back", async () => {

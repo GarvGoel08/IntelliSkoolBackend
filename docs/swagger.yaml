@@ -242,6 +242,46 @@ paths:
           description: User's registrations retrieved successfully
         404:
           description: Student not found
+  /ws:
+    get:
+      summary: WebSocket connection
+      description: |
+        Connect to the WebSocket server to receive real-time updates and send events.
+
+        **Connection URL:** `ws://localhost:8080`
+
+        **Events:**
+        - `connect-room`: Join a specific room with `roomID` and `userID`.
+          ```json
+          {
+            "roomID": "abc123",
+            "userID": "user123"
+          }
+          ```
+
+        - `ping`: Sent by the client to update attendance. No payload required.
+
+        - `Quiz`: Sent by the client to emit a quiz.
+          ```json
+          {
+            "question": "What is 2+2?",
+            "options": ["2", "4", "6"]
+          }
+          ```
+
+        - `Quiz` (receive): Server emits the quiz back to clients.
+
+        - `Answer`: Sent by the client to give his answer.
+          ```json
+          {
+            "answer": "4",
+            "time_taken": 10
+          }
+          ```
+      responses:
+        101:
+          description: Switching Protocols (WebSocket upgrade)
+
 
 components:
   securitySchemes:
