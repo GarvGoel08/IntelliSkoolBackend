@@ -17,7 +17,7 @@ connectDB();
 const app = express();
 
 const corsOptions = {
-  origin: ["http://localhost:3000"],
+  origin: ["http://localhost:5173"],
   optionsSuccessStatus: 200, // Corrected property name
   credentials: true,
 };
@@ -71,7 +71,7 @@ const server = app.listen(PORT, () => {
 const io = new Server(server, {
   cors: {
     origin: [
-      "http://localhost:3000",
+      "http://localhost:5173",
       "https://ezinterview.vercel.app",
       "https://ezinterview.vercel.app/",
     ],
@@ -90,6 +90,12 @@ import User from "./models/Users.js";
 io.on("connection", (socket) => {
   socket.on("connect-room", async ({ roomID, userID }) => {
     socket.join(roomID);
+    const classRoom = await Class.findById(roomID);
+    if (!classRoom) {
+      socket.emit("class-not-found");
+      socket.disconnect();
+      return;
+    }
     socket.on("ping", async () => {
       User.findByIdAndUpdate(userID, { $inc: { attendanceMinutes: 1 } });
     });
