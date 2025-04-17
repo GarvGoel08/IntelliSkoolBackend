@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>API Documentation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      color: #333;
+    }
+    .route {
+      background: white;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-left: 5px solid #3498db;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .method {
+      font-weight: bold;
+      color: #e67e22;
+    }
+    .section {
+      margin-top: 0.5rem;
+    }
+    pre {
+      background-color: #f0f0f0;
+      padding: 0.5rem;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>API Documentation</h1>
+
+  <!-- USER ROUTES -->
+  <div class="route">
+    <div class="method">POST /api/user/signup</div>
+    <div class="section">Input:</div>
+    <pre>{
+  "name": "John",
+  "email": "john@example.com",
+  "password": "123456",
+  "type": "Student"
+}</pre>
+    <div class="section">Output:</div>
+    <pre>{
+  "token": "...",
+  "user": {
+    "name": "John",
+    "email": "john@example.com",
+    "type": "Student"
+  }
+}</pre>
+  </div>
+
+  <div class="route">
+    <div class="method">POST /api/user/login</div>
+    <div class="section">Input:</div>
+    <pre>{
+  "email": "john@example.com",
+  "password": "123456"
+}</pre>
+    <div class="section">Output:</div>
+    <pre>{
+  "token": "...",
+  "user": {
+    "name": "John",
+    "email": "john@example.com",
+    "type": "Student"
+  }
+}</pre>
+  </div>
+
+  <div class="route">
+    <div class="method">GET /api/user/me</div>
+    <div class="section">Headers:</div>
+    <pre>Authorization: Bearer TOKEN</pre>
+    <div class="section">Output:</div>
+    <pre>{
+  "name": "John",
+  "email": "john@example.com",
+  "type": "Student"
+}</pre>
+  </div>
+
+  <!-- CLASSROOM ROUTES -->
+  <div class="route">
+    <div class="method">POST /api/classrooms</div>
+    <div class="section">Input:</div>
+    <pre>{
+  "className": "Physics",
+  "classDescription": "Kinematics",
+  "classCode": "PHY101"
+}</pre>
+    <div class="section">Output:</div>
+    <pre>{
+  "className": "Physics",
+  "classDescription": "Kinematics",
+  "classCode": "PHY101"
+}</pre>
+  </div>
+
+  <div class="route">
+    <div class="method">GET /api/classrooms/:id</div>
+    <div class="section">Output:</div>
+    <pre>[
+  {
+    "className": "Physics",
+    "classDescription": "Kinematics",
+    "classCode": "PHY101"
+  }
+]</pre>
+  </div>
+
+  <div class="route">
+    <div class="method">PUT /api/classrooms/:id</div>
+    <div class="section">Input:</div>
+    <pre>{
+  "className": "Updated Name"
+}</pre>
+    <div class="section">Output:</div>
+    <pre>{
+  "className": "Updated Name",
+  ...
+}</pre>
+  </div>
+
+  <div class="route">
+    <div class="method">DELETE /api/classrooms/:id</div>
+    <div class="section">Output:</div>
+    <pre>{ "message": "Classroom deleted successfully" }</pre>
+  </div>
+
+  <!-- CLASS ROUTES -->
+  <div class="route">
+    <div class="method">POST /api/classes</div>
+    <div class="section">Input:</div>
+    <pre>{
+  "classroomID": "...",
+  "meetCode": "abc123",
+  "duration": 60,
+  "startTime": "2025-04-18T10:00:00Z",
+  "topic": "Intro to Motion"
+}</pre>
+    <div class="section">Output:</div>
+    <pre>{
+  "meetCode": "abc123",
+  "duration": 60,
+  ...
+}</pre>
+  </div>
+
+  <div class="route">
+    <div class="method">GET /api/classes/:id</div>
+    <div class="section">Output:</div>
+    <pre>[
+  {
+    "meetCode": "abc123",
+    "duration": 60,
+    ...
+  }
+]</pre>
+  </div>
+
+  <div class="route">
+    <div class="method">PUT /api/classes/:id</div>
+    <div class="section">Input:</div>
+    <pre>{
+  "duration": 90
+}</pre>
+    <div class="section">Output:</div>
+    <pre>{
+  "duration": 90,
+  ...
+}</pre>
+  </div>
+
+  <div class="route">
+    <div class="method">DELETE /api/classes/:id</div>
+    <div class="section">Output:</div>
+    <pre>{ "message": "Class deleted successfully" }</pre>
+  </div>
+
+</body>
+</html>
