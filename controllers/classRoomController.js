@@ -72,9 +72,19 @@ const getClassroom = async (req, res) => {
   }
 };
 
+const getUserClassrooms = async (req, res) => {
+  try {
+    const classrooms = await Classroom.find({ userID: req.userId });
+    res.json(classrooms);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   createClassroom,
   updateClassroom,
   deleteClassroom,
-  getClassroom
+  getClassroom,
+  getUserClassrooms,
 };

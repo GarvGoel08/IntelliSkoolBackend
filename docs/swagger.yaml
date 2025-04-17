@@ -54,7 +54,7 @@ paths:
         400:
           description: Invalid credentials
 
-  /user/getUserDetail:
+  /user/me:
     get:
       summary: Get user details
       description: Get user details excluding password.
@@ -242,6 +242,135 @@ paths:
           description: User's registrations retrieved successfully
         404:
           description: Student not found
+  /tests:
+    post:
+      summary: Create a new test
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Test'
+      responses:
+        '201':
+          description: Test created successfully
+
+  /tests/{id}:
+    put:
+      summary: Update a test
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Test'
+      responses:
+        '200':
+          description: Test updated
+
+    delete:
+      summary: Delete a test
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Test deleted
+
+  /tests/classroom/{classroomId}:
+    get:
+      summary: Get all tests for a classroom
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: classroomId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of tests
+  /assignments:
+    post:
+      summary: Create an assignment
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Assignment'
+      responses:
+        '201':
+          description: Assignment created successfully
+
+  /assignments/{id}:
+    put:
+      summary: Update an assignment
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Assignment'
+      responses:
+        '200':
+          description: Assignment updated
+
+    delete:
+      summary: Delete an assignment
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Assignment deleted
+
+  /assignments/classroom/{classroomId}:
+    get:
+      summary: Get all assignments for a classroom
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: classroomId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of assignments
+
   /ws:
     get:
       summary: WebSocket connection
@@ -289,3 +418,51 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+
+  schemas:
+    Assignment:
+      type: object
+      properties:
+        name:
+          type: string
+        deadline:
+          type: string
+          format: date-time
+        description:
+          type: string
+        classroomID:
+          type: string
+          description: ObjectId reference to Classroom
+
+    Test:
+      type: object
+      properties:
+        name:
+          type: string
+        deadline:
+          type: string
+          format: date-time
+        classroomId:
+          type: string
+          description: ObjectId reference to Class
+        duration:
+          type: integer
+          minimum: 1
+        questions:
+          type: array
+          items:
+            type: object
+            properties:
+              question:
+                type: string
+              options:
+                type: array
+                items:
+                  type: string
+              answer:
+                type: string
+              marks:
+                type: number
+                default: 1
+        totalMarks:
+          type: number

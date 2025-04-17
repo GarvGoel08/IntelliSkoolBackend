@@ -32,6 +32,9 @@ import classRouter from "./routes/classRoutes.js";
 import classRoomRouter from "./routes/classRoomRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 import registrationRouter from "./routes/registrationRoutes.js";
+import testRouter from "./routes/testRoutes.js";
+import assignmentRouter from "./routes/assignmentRoutes.js";
+
 import path from "path";
 import YAML from "yamljs";
 import swaggerUi from "swagger-ui-express";
@@ -42,6 +45,8 @@ app.use("/api/classes", classRouter);
 app.use("/api/classrooms", classRoomRouter);
 app.use("/api/user", userRouter);
 app.use("/api/register", registrationRouter);
+app.use("/api/tests", testRouter);
+app.use("/api/assignments", assignmentRouter);
 
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.get("/", (req, res) => {

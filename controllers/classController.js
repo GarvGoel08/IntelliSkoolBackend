@@ -72,9 +72,33 @@ const getClass = async (req, res) => {
   }
 };
 
+const getClassroomClasses = async (req, res) => {
+  try {
+    const { classroomId } = req.params;
+
+    const classes = await Class.find({ classroomId });
+    
+    if (!classes) {
+      return res.status(404).json({ error: 'Classes not found' });
+    }
+
+    const classDetails = classes.map(session => {
+      const classDetails = session.toObject();
+      delete classDetails._id;
+      delete classDetails.__v;
+      return classDetails;
+    });
+
+    res.json(classDetails);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   createClass,
   updateClass,
   deleteClass,
-  getClass
+  getClass,
+  getClassroomClasses
 };
