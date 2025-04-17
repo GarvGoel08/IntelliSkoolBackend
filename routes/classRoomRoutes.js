@@ -1,5 +1,5 @@
 const express = require('express');
-const { createClassroom, updateClassroom, deleteClassroom, getClassroom } = require('../controllers/classroomController');
+const { createClassroom, updateClassroom, deleteClassroom, getClassroom } = require('../controllers/classRoomController');
 const authMiddleware = require('../middlewares/auth'); // For authentication middleware
 
 const router = express.Router();
