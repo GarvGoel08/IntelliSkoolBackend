@@ -19,6 +19,10 @@ const assignmentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Classroom',
     required: true
+  },
+  fileURL: {
+    type: String,
+    required: true
   }
 }, {
   timestamps: true
