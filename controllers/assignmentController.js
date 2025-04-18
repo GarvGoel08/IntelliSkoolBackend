@@ -2,13 +2,14 @@ const Assignment = require("../models/Assignment");
 
 const createAssignment = async (req, res) => {
   try {
-    const { name, deadline, description, classroomID } = req.body;
+    const { name, deadline, description, classroomID, fileURL } = req.body;
 
     const newAssignment = await Assignment.create({
       name,
       deadline,
       description,
       classroomID,
+      fileURL,
     });
 
     const { _id, ...rest } = newAssignment._doc;
