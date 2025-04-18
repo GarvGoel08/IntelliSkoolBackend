@@ -1,9 +1,22 @@
 const Classroom = require('../models/Classroom');
 
+const randomSixCode = () => {
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let code = "";
+  for (let i = 0; i < 6; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    code += characters[randomIndex];
+  }
+  return code;
+};
+
 const createClassroom = async (req, res) => {
   try {
-    const classroom = new Classroom(req.body);
+    const code = randomSixCode();
+    const classroom = new Classroom({...req.body, classCode: code});
     const savedClassroom = await classroom.save();
+
     
     const classroomDetails = savedClassroom.toObject();
     delete classroomDetails._id;
