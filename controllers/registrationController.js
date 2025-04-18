@@ -3,7 +3,11 @@ const Classroom = require('../models/Classroom');
 
 const createRegistration = async (req, res) => {
   try {
-    const { classroomId } = req.body;
+    const { classCode } = req.body;
+    const classroom = await Classroom.findOne({ classCode });
+    if (!classroom) return res.status(404).json({ message: "Classroom not found" });
+
+    const classroomId = classroom._id
     const studentId = req.userId;
 
     const existing = await Registrations.findOne({ studentId, classroomId });
