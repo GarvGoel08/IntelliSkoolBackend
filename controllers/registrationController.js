@@ -40,6 +40,7 @@ const getUserRegistrations = async (req, res) => {
     const response = registrations.map(reg => {
       const { _id, classroomId, studentId, createdAt, updatedAt } = reg;
       const classroom = classroomId ? {
+        _id: classroomId._id,
         className: classroomId.className,
         classDescription: classroomId.classDescription,
         classCode: classroomId.classCode
