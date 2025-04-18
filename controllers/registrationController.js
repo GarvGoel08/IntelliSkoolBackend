@@ -4,7 +4,7 @@ const Classroom = require('../models/Classroom');
 const createRegistration = async (req, res) => {
   try {
     const { classroomId } = req.body;
-    const studentId = req.user;
+    const studentId = req.userId;
 
     const existing = await Registrations.findOne({ studentId, classroomId });
     if (existing) return res.status(400).json({ message: "Already registered" });

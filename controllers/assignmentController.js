@@ -8,27 +8,34 @@ const createAssignment = async (req, res) => {
       name,
       deadline,
       description,
-      classroomID
+      classroomID,
     });
 
     const { _id, ...rest } = newAssignment._doc;
     res.status(200).json(rest);
   } catch (err) {
-    res.status(500).json({ error: "Failed to create assignment", details: err.message });
+    res
+      .status(500)
+      .json({ error: "Failed to create assignment", details: err.message });
   }
 };
 
 const updateAssignment = async (req, res) => {
   try {
     const { id } = req.params;
-    const updatedAssignment = await Assignment.findByIdAndUpdate(id, req.body, { new: true });
+    const updatedAssignment = await Assignment.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
 
-    if (!updatedAssignment) return res.status(404).json({ error: "Assignment not found" });
+    if (!updatedAssignment)
+      return res.status(404).json({ error: "Assignment not found" });
 
     const { _id, ...rest } = updatedAssignment._doc;
     res.status(200).json(rest);
   } catch (err) {
-    res.status(500).json({ error: "Failed to update assignment", details: err.message });
+    res
+      .status(500)
+      .json({ error: "Failed to update assignment", details: err.message });
   }
 };
 
@@ -45,7 +52,9 @@ const getClassAssignments = async (req, res) => {
 
     res.status(200).json(result);
   } catch (err) {
-    res.status(500).json({ error: "Failed to fetch assignments", details: err.message });
+    res
+      .status(500)
+      .json({ error: "Failed to fetch assignments", details: err.message });
   }
 };
 
@@ -54,11 +63,14 @@ const deleteAssignment = async (req, res) => {
     const { id } = req.params;
     const deleted = await Assignment.findByIdAndDelete(id);
 
-    if (!deleted) return res.status(404).json({ error: "Assignment not found" });
+    if (!deleted)
+      return res.status(404).json({ error: "Assignment not found" });
 
     res.status(200).json({ message: "Assignment deleted" });
   } catch (err) {
-    res.status(500).json({ error: "Failed to delete assignment", details: err.message });
+    res
+      .status(500)
+      .json({ error: "Failed to delete assignment", details: err.message });
   }
 };
 
