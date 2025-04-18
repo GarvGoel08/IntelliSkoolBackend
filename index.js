@@ -17,7 +17,7 @@ connectDB();
 const app = express();
 
 const corsOptions = {
-  origin: ["http://localhost:5173", "https://intelli-skool.vercel.app"],
+  origin: ["http://localhost:5173", "https://intelli-skool.vercel.app", "https://intelliskool.onrender.com"],
   optionsSuccessStatus: 200, // Corrected property name
   credentials: true,
 };
@@ -82,6 +82,8 @@ const io = new Server(server, {
       "https://ezinterview.vercel.app/",
       "https://intelli-skool.vercel.app",
       "https://intelli-skool.vercel.app/",
+      "https://intelliskool.onrender.com",
+      "https://intelliskool.onrender.com/"
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
   },
